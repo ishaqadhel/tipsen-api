@@ -86,3 +86,11 @@ export async function updateOneUser(
 
   return result
 }
+
+export async function softDeleteOneUser(id: number): Promise<ResultSetHeader> {
+  const result = await writeQuery(
+    `UPDATE users SET deleted_at = NOW(), updated_at = NOW() WHERE id = ${id}`
+  )
+
+  return result
+}

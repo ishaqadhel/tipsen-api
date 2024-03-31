@@ -10,6 +10,7 @@ import {
   getAllUser,
   getAllUserWithPagination,
   getOneUserById,
+  softDeleteOneUser,
   updateOneUser
 } from './service'
 import { isPagination } from '../../../services/pagination'
@@ -100,6 +101,36 @@ export function update(req: Request, res: Response): void {
             .catch((err) => {
               sendError(res, Error(err.sqlMessage as string))
             })
+        } else {
+          sendBadRequestError(res, Error('user not found'), null)
+        }
+      })
+      .catch((err) => {
+        sendError(res, Error(err.sqlMessage as string))
+      })
+  }
+}
+
+export function deleteOne(req: Request, res: Response): void {
+  // Check Validation
+  const reqResult = validationResult(req)
+  if (!reqResult.isEmpty()) {
+    sendBadRequestError(res, Error('bad request'), reqResult)
+  } else {
+    getOneUserById(Number(req.params.id))
+      .then((response) => {
+        if (response.length > 0) {
+          if (!(response[0].is_admin as boolean)) {
+            softDeleteOneUser(Number(response[0].id))
+              .then(() => {
+                sendSuccess(res)
+              })
+              .catch((err) => {
+                sendError(res, Error(err.sqlMessage as string))
+              })
+          } else {
+            sendBadRequestError(res, Error('cannot delete admin'), null)
+          }
         } else {
           sendBadRequestError(res, Error('user not found'), null)
         }

@@ -80,3 +80,12 @@ export const updateUserSchemaValidation = {
     errorMessage: 'Position id is required and must be a number'
   }
 }
+
+export const deleteUserSchemaValidation = {
+  id: {
+    trim: true,
+    isNumeric: true,
+    notEmpty: true,
+    errorMessage: 'Id is required and must be a number'
+  }
+}
