@@ -69,3 +69,20 @@ export async function createOneUser(
 
   return result
 }
+
+export async function updateOneUser(
+  id: number,
+  name: string,
+  email: string,
+  password: string,
+  gender: string,
+  positionId: number
+): Promise<ResultSetHeader> {
+  const newHashPassword = hashSync(password, 10)
+
+  const result = await writeQuery(
+    `UPDATE users SET name = '${name}', email = '${email}', password = '${newHashPassword}', gender = '${gender}', position_id = ${positionId}, updated_at = NOW() WHERE id = ${id}`
+  )
+
+  return result
+}
