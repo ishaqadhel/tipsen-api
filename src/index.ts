@@ -8,6 +8,7 @@ import { sendSuccess } from './services/api-response'
 
 import { router as MasterDataPositionRouter } from './modules/master-data/position/router'
 import { router as MasterDataUserRouter } from './modules/master-data/user/router'
+import { router as AttendanceRouter } from './modules/attendance/router'
 
 // Boot express
 const app: Application = express()
@@ -23,6 +24,7 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 app.use('/api/master-data/position', MasterDataPositionRouter)
 app.use('/api/master-data/user', MasterDataUserRouter)
+app.use('/api/attendance', AttendanceRouter)
 
 // Start server
 app.listen(port, () => {
