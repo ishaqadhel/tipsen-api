@@ -1,8 +1,14 @@
 import express from 'express'
-import { create, getOneInOneUserToday, index } from './controller'
+import {
+  create,
+  getAllInOneUser,
+  getOneInOneUserToday,
+  index
+} from './controller'
 import { checkSchema } from 'express-validator'
 import {
   createAttendanceSchemaValidation,
+  userGetAllSchemaValidation,
   userGetOneTodaySchemaValidation
 } from './request'
 import { verifyToken } from '../../middleware/token'
@@ -16,6 +22,14 @@ router.post(
   checkSchema(createAttendanceSchemaValidation),
   create
 )
+
+router.get(
+  '/user/:id',
+  verifyToken,
+  checkSchema(userGetAllSchemaValidation),
+  getAllInOneUser
+)
+
 router.get(
   '/user/:id/today',
   verifyToken,

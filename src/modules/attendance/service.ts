@@ -58,3 +58,13 @@ export async function createOneAttendance(
 
   return result
 }
+
+export async function getAllAttendanceWithPaginationInOneUser(
+  userId: number
+): Promise<Array<Partial<AttendanceListResponse>>> {
+  const results = await selectQuery<AttendanceListResponse>(
+    `SELECT * from attendances WHERE user_id = ${userId}`
+  )
+
+  return results
+}

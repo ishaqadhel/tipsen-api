@@ -10,6 +10,7 @@ import {
   createOneAttendance,
   getAllAttendance,
   getAllAttendanceWithPagination,
+  getAllAttendanceWithPaginationInOneUser,
   getOneAttendanceInOneUserToday
 } from './service'
 import { validationResult } from 'express-validator'
@@ -82,6 +83,22 @@ export function getOneInOneUserToday(req: Request, res: Response): void {
         if (response.length > 0) {
           sendSuccessWithData(res, response[0])
         } else sendError(res, Error('there is no attendance log today'))
+      })
+      .catch((err) => {
+        sendError(res, Error(err.sqlMessage as string))
+      })
+  }
+}
+
+export function getAllInOneUser(req: Request, res: Response): void {
+  // Check Validation
+  const reqResult = validationResult(req)
+  if (!reqResult.isEmpty()) {
+    sendBadRequestError(res, Error('bad request'), reqResult)
+  } else {
+    getAllAttendanceWithPaginationInOneUser(Number(req.params.id))
+      .then((response) => {
+        sendSuccessWithData(res, response)
       })
       .catch((err) => {
         sendError(res, Error(err.sqlMessage as string))

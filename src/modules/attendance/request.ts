@@ -18,3 +18,12 @@ export const userGetOneTodaySchemaValidation = {
     errorMessage: 'id is required'
   }
 }
+
+export const userGetAllSchemaValidation = {
+  id: {
+    trim: true,
+    notEmpty: true,
+    isNumeric: true,
+    errorMessage: 'id is required'
+  }
+}
