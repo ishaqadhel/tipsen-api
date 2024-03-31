@@ -20,6 +20,20 @@ services:
       SERVICE_NAME: mysql
     networks:
       - tipsen
+  minio:
+    container_name: tipsen-minio
+    image: minio/minio
+    ports:
+      - 8081:9000
+      - 8082:9001
+    volumes:
+      - ./minio_data:/data
+    environment:
+      - MINIO_ROOT_USER=root
+      - MINIO_ROOT_PASSWORD=12345678
+    command: server /data --console-address ":9001"
+    networks:
+      - tipsen
 networks:
   tipsen:
     driver: bridge

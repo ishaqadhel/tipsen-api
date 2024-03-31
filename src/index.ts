@@ -4,15 +4,20 @@ import express, {
   type Response,
   type NextFunction
 } from 'express'
+import { sendSuccess } from './services/api-response'
+
+import { router as MasterDataPositionRouter } from './modules/master-data/position/router'
 
 // Boot express
 const app: Application = express()
 const port = 8080
 
 // Application routing
-app.use('/', (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send({ data: 'Welcome to Tipsen API.' })
+app.get('/', (req: Request, res: Response, next: NextFunction) => {
+  sendSuccess(res)
 })
+
+app.use('/api/master-data/position', MasterDataPositionRouter)
 
 // Start server
 app.listen(port, () => {
