@@ -9,3 +9,12 @@ export const createAttendanceSchemaValidation = {
     errorMessage: 'Picture is required'
   }
 }
+
+export const userGetOneTodaySchemaValidation = {
+  id: {
+    trim: true,
+    notEmpty: true,
+    isNumeric: true,
+    errorMessage: 'id is required'
+  }
+}

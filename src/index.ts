@@ -5,6 +5,7 @@ import express, {
   type NextFunction
 } from 'express'
 import { sendSuccess } from './services/api-response'
+import cors from 'cors'
 
 import { router as MasterDataPositionRouter } from './modules/master-data/position/router'
 import { router as MasterDataUserRouter } from './modules/master-data/user/router'
@@ -16,6 +17,7 @@ import { router as AuthenticationRouter } from './modules/authentication/router'
 const app: Application = express()
 const port = 8080
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
