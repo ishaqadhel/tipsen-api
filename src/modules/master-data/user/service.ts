@@ -5,8 +5,24 @@ import { type PaginationData } from '../../../services/api-response'
 import { type ResultSetHeader } from 'mysql2'
 import { hashSync } from 'bcrypt'
 
+function createNewUserCode(totalCurrentEmployee: number): string {
+  const code = 'EMP-' + (totalCurrentEmployee + 1).toString()
+  return code
+}
+
 export async function getAllUser(): Promise<Array<Partial<UserListResponse>>> {
-  const result = await selectQuery<UserListResponse>('select * from users')
+  const result = await selectQuery<UserListResponse>(
+    'select id, code, name, email, gender, is_admin, position_id, created_at, updated_at, deleted_at from users'
+  )
+  return result
+}
+
+export async function getOneUserById(
+  id: number
+): Promise<Array<Partial<UserListResponse>>> {
+  const result = await selectQuery<UserListResponse>(
+    `select id, code, name, email, gender, is_admin, position_id, created_at, updated_at, deleted_at from users where id = ${id} LIMIT 1`
+  )
   return result
 }
 
@@ -29,11 +45,6 @@ export async function getAllUserWithPagination(
     data: rows,
     meta
   }
-}
-
-function createNewUserCode(totalCurrentEmployee: number): string {
-  const code = 'EMP-' + (totalCurrentEmployee + 1).toString()
-  return code
 }
 
 export async function createOneUser(

@@ -31,3 +31,12 @@ export const createUserSchemaValidation = {
     errorMessage: 'Position id is required and must be a number'
   }
 }
+
+export const getOneUserSchemaValidation = {
+  id: {
+    trim: true,
+    isNumeric: true,
+    notEmpty: true,
+    errorMessage: 'Id is required and must be a number'
+  }
+}

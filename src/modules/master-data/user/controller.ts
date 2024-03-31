@@ -5,7 +5,12 @@ import {
   sendSuccess,
   sendSuccessWithData
 } from '../../../services/api-response'
-import { createOneUser, getAllUser, getAllUserWithPagination } from './service'
+import {
+  createOneUser,
+  getAllUser,
+  getAllUserWithPagination,
+  getOneUserById
+} from './service'
 import { isPagination } from '../../../services/pagination'
 import { validationResult } from 'express-validator'
 
@@ -25,6 +30,26 @@ export function index(req: Request, res: Response): void {
       })
       .catch(() => {
         sendError(res, Error('cant fetch data'))
+      })
+  }
+}
+
+export function getOne(req: Request, res: Response): void {
+  // Check Validation
+  const reqResult = validationResult(req)
+  if (!reqResult.isEmpty()) {
+    sendBadRequestError(res, Error('bad request'), reqResult)
+  } else {
+    getOneUserById(Number(req.params.id))
+      .then((response) => {
+        if (response.length > 0) {
+          sendSuccessWithData(res, response[0])
+        } else {
+          sendBadRequestError(res, Error('user not found'), null)
+        }
+      })
+      .catch((err) => {
+        sendError(res, Error(err.sqlMessage as string))
       })
   }
 }
