@@ -1,5 +1,15 @@
 import { type Response } from 'express'
 
+export interface PaginationData<T> {
+  data: T
+  meta: PaginationMetaData
+}
+
+export interface PaginationMetaData {
+  total: number
+  last_page: number
+}
+
 export function sendSuccess(res: Response): Response {
   return res.status(200).send({
     status: 200,
