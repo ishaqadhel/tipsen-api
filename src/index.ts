@@ -10,6 +10,7 @@ import { router as MasterDataPositionRouter } from './modules/master-data/positi
 import { router as MasterDataUserRouter } from './modules/master-data/user/router'
 import { router as AttendanceRouter } from './modules/attendance/router'
 import { router as FileRouter } from './modules/file/router'
+import { router as AuthenticationRouter } from './modules/authentication/router'
 
 // Boot express
 const app: Application = express()
@@ -27,6 +28,7 @@ app.use('/api/master-data/position', MasterDataPositionRouter)
 app.use('/api/master-data/user', MasterDataUserRouter)
 app.use('/api/attendance', AttendanceRouter)
 app.use('/api/file', FileRouter)
+app.use('/api/authentication', AuthenticationRouter)
 
 // Start server
 app.listen(port, () => {

@@ -3,7 +3,7 @@ import { selectQuery, writeQuery } from '../../../services/database'
 import { type UserListResponse } from './response'
 import { type PaginationData } from '../../../services/api-response'
 import { type ResultSetHeader } from 'mysql2'
-import { hashSync } from 'bcrypt'
+import { hash } from 'bcrypt'
 
 function createNewUserCode(totalCurrentEmployee: number): string {
   const code = 'EMP-' + (totalCurrentEmployee + 1).toString()
@@ -59,7 +59,7 @@ export async function createOneUser(
   )
 
   const newCode = createNewUserCode(count[0].total ?? 0)
-  const newHashPassword = hashSync(password, 10)
+  const newHashPassword = await hash(password, 10)
 
   const result = await writeQuery(
     `INSERT INTO users (code, name, email, password, gender, is_admin, created_at, updated_at, position_id) 
@@ -78,7 +78,7 @@ export async function updateOneUser(
   gender: string,
   positionId: number
 ): Promise<ResultSetHeader> {
-  const newHashPassword = hashSync(password, 10)
+  const newHashPassword = await hash(password, 10)
 
   const result = await writeQuery(
     `UPDATE users SET name = '${name}', email = '${email}', password = '${newHashPassword}', gender = '${gender}', position_id = ${positionId}, updated_at = NOW() WHERE id = ${id}`

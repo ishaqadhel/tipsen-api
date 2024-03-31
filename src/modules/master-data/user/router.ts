@@ -7,11 +7,37 @@ import {
   getOneUserSchemaValidation,
   updateUserSchemaValidation
 } from './request'
+import { verifyToken } from '../../../middleware/token'
+import { mustAdmin } from '../../../middleware/admin'
 
 export const router = express.Router()
 
-router.get('/', index)
-router.get('/:id', checkSchema(getOneUserSchemaValidation), getOne)
-router.post('/', checkSchema(createUserSchemaValidation), create)
-router.patch('/:id', checkSchema(updateUserSchemaValidation), update)
-router.delete('/:id', checkSchema(deleteUserSchemaValidation), deleteOne)
+router.get('/', verifyToken, mustAdmin, index)
+router.get(
+  '/:id',
+  verifyToken,
+  mustAdmin,
+  checkSchema(getOneUserSchemaValidation),
+  getOne
+)
+router.post(
+  '/',
+  verifyToken,
+  mustAdmin,
+  checkSchema(createUserSchemaValidation),
+  create
+)
+router.patch(
+  '/:id',
+  verifyToken,
+  mustAdmin,
+  checkSchema(updateUserSchemaValidation),
+  update
+)
+router.delete(
+  '/:id',
+  verifyToken,
+  mustAdmin,
+  checkSchema(deleteUserSchemaValidation),
+  deleteOne
+)

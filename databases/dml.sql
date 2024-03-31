@@ -11,4 +11,4 @@ INSERT INTO positions (name, created_at, updated_at) VALUES
 
 -- admin seeder (password)
 INSERT INTO users (code, name, email, password, gender, is_admin, created_at, updated_at, position_id) VALUES
-    ('EMP-1', 'admin', 'admin@example.com', '$2b$10$fp6Q4UEaiheXxIcsEDWr4OrI5U4PgBJR2B.TfUXKC9lH7FJT0tlAC', 'M', true, NOW(), NOW(), 2);
+    ('EMP-1', 'admin', 'admin@example.com', '$2b$10$TayargfYrS47Y1N8R6d7FOMcQc1OpPOvnBlfDOWRc9rA2ZX2Mrt.y', 'M', true, NOW(), NOW(), 2);
