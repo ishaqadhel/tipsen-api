@@ -37,11 +37,15 @@ export function sendError(res: Response, err: Error): Response {
   })
 }
 
-export function sendBadRequestError(res: Response, err: Error): Response {
+export function sendBadRequestError(
+  res: Response,
+  err: Error,
+  dataObject: unknown
+): Response {
   return res.status(400).send({
     status: 400,
     error: err.message,
-    data: null
+    data: dataObject
   })
 }
 
